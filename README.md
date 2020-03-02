@@ -10,7 +10,7 @@ To build and run:
 
 # Service API
 
-| Resource       | Method | Description                                                                                        |
-| -------------- | ------ | -------------------------------------------------------------------------------------------------- |
-| /catalog       | GET    | Retrieves a summary of catalog items                                                               |
-| /catalog/{sku} | GET    | Retrieves details for an individual catalog item. This will invoke the fulfillment backing service |
+| Resource              | Method | Description                                                                                        |
+| --------------------- | ------ | -------------------------------------------------------------------------------------------------- |
+| /catalog              | GET    | Retrieves a summary of catalog items                                                               |
+| /catalog/{productId } | GET    | Retrieves details for an individual catalog item. This will invoke the fulfillment backing service |
