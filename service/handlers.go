@@ -12,8 +12,8 @@ import (
 func getAllCatalogItemsHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		catalog := make([]catalogItem, 2)
-		catalog[0] = fakeItem("ABC1234")
-		catalog[1] = fakeItem("STAPLER99")
+		catalog[0] = fakeItem("ABC1234", 12345)
+		catalog[1] = fakeItem("STAPLER99", 45678)
 		formatter.JSON(w, http.StatusOK, catalog)
 	}
 }
@@ -48,7 +48,8 @@ func rootHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
-func fakeItem(productID string) (item catalogItem) {
+func fakeItem(productID string, listingID int) (item catalogItem) {
+	item.ListingID = listingID
 	item.ProductID = productID
 	item.Description = "This is a fake product"
 	item.Price = 1599
