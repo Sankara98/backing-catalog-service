@@ -24,12 +24,12 @@ func getAllCatalogItemsHandler(formatter *render.Render) http.HandlerFunc {
 func getCatalogItemDetailsHandler(formatter *render.Render, serviceClient fulfillmentClient) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		vars := mux.Vars(req)
-		sku := vars["sku"]
-		status, err := serviceClient.getFulfillmentStatus(sku)
+		productID := vars["productId"]
+		status, err := serviceClient.getFulfillmentStatus(productID)
 		if err == nil {
 			formatter.JSON(w, http.StatusOK, catalogItem{
-				ProductID:       1,
-				SKU:             sku,
+				ListingID:       1,
+				ProductID:       productID,
 				Description:     "This is a fake product",
 				Price:           1599, // 15.99
 				ShipsWithin:     status.ShipsWithin,
@@ -48,8 +48,8 @@ func rootHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
-func fakeItem(sku string) (item catalogItem) {
-	item.SKU = sku
+func fakeItem(productID string) (item catalogItem) {
+	item.ProductID = productID
 	item.Description = "This is a fake product"
 	item.Price = 1599
 	item.QuantityInStock = 75

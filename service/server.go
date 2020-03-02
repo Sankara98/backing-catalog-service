@@ -16,7 +16,7 @@ func NewServer() *negroni.Negroni {
 	n := negroni.Classic()
 	mx := mux.NewRouter()
 	webClient := fulfillmentWebClient{
-		rootURL: "http://localhost:3001/skus",
+		rootURL: "http://localhost:3001/products",
 	}
 
 	initRoutes(mx, formatter, webClient)
@@ -45,6 +45,6 @@ func initRoutes(mx *mux.Router, formatter *render.Render, webClient fulfillmentC
 	mx.HandleFunc("/", rootHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/catalog",
 		getAllCatalogItemsHandler(formatter)).Methods("GET")
-	mx.HandleFunc("/catalog/{sku}",
+	mx.HandleFunc("/catalog/{productId}",
 		getCatalogItemDetailsHandler(formatter, webClient)).Methods("GET")
 }

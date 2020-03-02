@@ -8,19 +8,19 @@ import (
 )
 
 type fulfillmentClient interface {
-	getFulfillmentStatus(sku string) (status fulfillmentStatus, err error)
+	getFulfillmentStatus(productID string) (status fulfillmentStatus, err error)
 }
 
 type fulfillmentWebClient struct {
 	rootURL string
 }
 
-func (client fulfillmentWebClient) getFulfillmentStatus(sku string) (status fulfillmentStatus, err error) {
+func (client fulfillmentWebClient) getFulfillmentStatus(productID string) (status fulfillmentStatus, err error) {
 	httpclient := &http.Client{}
 
-	skuURL := fmt.Sprintf("%s/%s", client.rootURL, sku)
-	fmt.Printf("About to request SKU details from backing service: %s\n", skuURL)
-	req, _ := http.NewRequest("GET", skuURL, nil)
+	productURL := fmt.Sprintf("%s/%s", client.rootURL, productID)
+	fmt.Printf("About to request SKU details from backing service: %s\n", productURL)
+	req, _ := http.NewRequest("GET", productURL, nil)
 
 	resp, err := httpclient.Do(req)
 	if err != nil {

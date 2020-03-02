@@ -17,7 +17,7 @@ var (
 	})
 )
 
-func TestGetDetailsForCatalogItemsReturnPropeData(t *testing.T) {
+func TestGetDetailsForCatalogItemsReturnProperData(t *testing.T) {
 	var (
 		request  *http.Request
 		recorder *httptest.ResponseRecorder
@@ -25,9 +25,9 @@ func TestGetDetailsForCatalogItemsReturnPropeData(t *testing.T) {
 
 	server := MakeTestServer()
 
-	targetSKU := "THINGAMAJIG12"
+	productID := "THINGAMAJIG12"
 	recorder = httptest.NewRecorder()
-	request, _ = http.NewRequest("GET", "/catalog/"+targetSKU, nil)
+	request, _ = http.NewRequest("GET", "/catalog/"+productID, nil)
 	server.ServeHTTP(recorder, request)
 
 	var detail catalogItem
@@ -45,18 +45,18 @@ func TestGetDetailsForCatalogItemsReturnPropeData(t *testing.T) {
 		t.Errorf("Error unmarshaling respone to catalog: %v", err)
 	}
 	if detail.QuantityInStock != 1000 {
-		t.Errorf("Expected 1000 qty in stock, got &d", detail.QuantityInStock)
+		t.Errorf("Expected 1000 qty in stock, got %d", detail.QuantityInStock)
 	}
 	if detail.ShipsWithin != 99 {
 		t.Errorf("Expected shipWithin 14 days, got %d", detail.ShipsWithin)
 	}
 
-	if detail.SKU != "THINGAMAJIG12" {
-		t.Errorf("Expected SKU THINGAMAJIG12, got %s", detail.SKU)
+	if detail.ProductID != "THINGAMAJIG12" {
+		t.Errorf("Expected SKU THINGAMAJIG12, got %s", detail.ProductID)
 	}
 
-	if detail.ProductID != 1 {
-		t.Errorf("Expected product ID of 1, got %d", detail.ProductID)
+	if detail.ListingID != 1 {
+		t.Errorf("Expected product ID of 1, got %d", detail.ListingID)
 	}
 }
 
@@ -67,9 +67,9 @@ func MakeTestServer() *negroni.Negroni {
 
 type fakeWebClient struct{}
 
-func (client fakeWebClient) getFulfillmentStatus(sku string) (status fulfillmentStatus, err error) {
+func (client fakeWebClient) getFulfillmentStatus(productID string) (status fulfillmentStatus, err error) {
 	status = fulfillmentStatus{
-		SKU:             sku,
+		ProductID:       productID,
 		ShipsWithin:     99,
 		QuantityInStock: 1000,
 	}
