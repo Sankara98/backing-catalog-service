@@ -1,6 +1,6 @@
 # Backing Catalog Service
 
-Fake catalog service for the Backing-fulfillment-service
+catalog service for the Backing-fulfillment-service
 
 To build and run:
 
