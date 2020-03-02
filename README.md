@@ -1,7 +1,7 @@
 # Backing Catalog Service
 
 catalog service for the Backing-fulfillment-service
-
+For an interactive documentation and code samples visit the [Catalog Services Docs](https://backingcatalogservice.docs.apiary.io/#)
 To build and run:
 
 - `go build` to build the executable.
