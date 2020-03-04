@@ -4,15 +4,16 @@ import (
 	"fmt"
 
 	"github.com/cloudfoundry-community/go-cfenv"
-	"github.com/cloudnativego/cf-tools"
+	cftools "github.com/cloudnativego/cf-tools"
 	"github.com/gorilla/mux"
 	"github.com/unrolled/render"
 	"github.com/urfave/negroni"
 )
-//NewServerFromCFEnv decides the url to use for a webclient 
-func NewServerFromCFEnv(appEnv *cfenv.App) * negroni.Negroni {
-	webClient := fulfillmentClient{
-		routURL: "http://localhost:3001/sku"
+
+//NewServerFromCFEnv decides the url to use for a webclient
+func NewServerFromCFEnv(appEnv *cfenv.App) *negroni.Negroni {
+	webClient := fulfillmentWebClient{
+		rootURL: "http://localhost:3001/sku",
 	}
 
 	val, err := cftools.GetVCAPServiceProperty("backing-fulfill", "url", appEnv)
@@ -26,6 +27,7 @@ func NewServerFromCFEnv(appEnv *cfenv.App) * negroni.Negroni {
 
 	return NewServerFromClient(webClient)
 }
+
 //NewServer Creates a new server and fits route Handlers
 func NewServer() *negroni.Negroni {
 
