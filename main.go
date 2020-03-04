@@ -1,17 +1,24 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
-	service "github.com/Sankara98/backing-catalog/service"
+	"github.com/cloudfoundry-community/go-cfenv"
+	"github.com/cloudnativego/backing-catalog/service"
 )
 
 func main() {
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
-		port = "8000"
+		port = "3000"
 	}
 
-	server := service.NewServer()
+	appEnv, err := cfenv.Current()
+	if err != nil {
+		fmt.Println("CF Environment not detected.")
+	}
+
+	server := service.NewServerFromCFEnv(appEnv)
 	server.Run(":" + port)
 }
