@@ -23,7 +23,6 @@ build:
     - internal/docker-push:
         username: $USERNAME
         password: $PASSWORD
-        port: "8080"
         tag: latest
         repository: sankara98/backing-catalog
         registry: https://registry.hub.docker.com
