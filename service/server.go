@@ -13,7 +13,7 @@ import (
 //NewServerFromCFEnv decides the url to use for a webclient
 func NewServerFromCFEnv(appEnv *cfenv.App) *negroni.Negroni {
 	webClient := fulfillmentWebClient{
-		rootURL: "http://localhost:3001/sku",
+		rootURL: "http://localhost:3001/products",
 	}
 
 	val, err := cftools.GetVCAPServiceProperty("backing-fulfill", "url", appEnv)
