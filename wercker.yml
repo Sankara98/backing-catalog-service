@@ -1,0 +1,43 @@
+build:
+  box: golang
+  steps:
+    - wercker/golint
+    # Test the project
+    - script:
+        name: Unit tests
+        code: go test -v ./service    
+    - internal/docker-build: 
+        dockerfile: Dockerfile 
+        image-name: my-new-image # name used to refer to this image until it's pushed   
+    - internal/docker-run:
+        image: my-new-image
+        name: myTestContainer     
+    - script: 
+        name: Test the container
+        code: |
+            if curlOutput=`curl -s myTestContainer:3000/`; then 
+            echo $curlOutput   
+            fi  
+    - internal/docker-kill:
+        name: myTestContainer               
+    - internal/docker-push:
+        username: $USERNAME
+        password: $PASSWORD
+        port: "3000"
+        tag: latest
+        repository: sankara98/backing-catalog
+        registry: https://registry.hub.docker.com
+
+
+unit-test:
+  box: golang
+  steps:
+   - script:
+        name: go build
+        code: |
+          go build ./...
+  steps:
+    - script:
+        name: gogo service unit test
+        code: |
+          go test -v ./service
